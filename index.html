@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prismatic Minds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <img src="logo.png" alt="Prismatic Minds Logo" class="logo">
+    <nav class="nav" id="nav">
+      <ul class="nav-menu">
+        <li><a href="#about">About</a></li>
+        <li><a href="#care">Neurodiversity-Affirming Care</a></li>
+        <li><a href="#psypact">PSYPACT</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#faq">Fees & FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#get-started" class="btn">Get Started</a>
+    </nav>
+    
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="main-content">
+    <section class="intro">
+      <div class="intro-row">
+        <p class="intro-text">
+          Are you finding it hard to get things done, organize, or get "unstuck?" Or perhaps you're feeling weighed down by exhaustion, anxiety, stress, and depression related to experiences such as burnout? Maybe you are curious about parts of your identity and searching for your authentic self? These are just some of the questions that my clients and I work on together.
+        </p>
+        <img src="chris.png" alt="Dr. Chris Truong" class="profile-img">
+      </div>
+
+      <div class="profile">
+        <h1>My name is Dr. Chris Truong (she/they) and I am a neurodiversity-affirming psychologist.</h1>
+      </div>
+    </section>
+
+    <section class="about">
+      <div class="about-visual">
+        <img src="home_image.png" alt="Person looking at sky" class="about-img">
+      </div>
+
+      <div class="about-text">
+        <p class="about-lead">
+          I use an authentic, strengths-based, and person-centered lens to meet you where you are at on your life journey.
+        </p>
+
+        <ul>
+          <li>I am licensed in the state of Maryland and am also a PSYPACT telehealth provider for 42 states across the country.</li>
+          <li>I provide virtual individual and group psychotherapy services for teens and adults with specialty areas in autism, ADHD, and working with neurodivergent and LGBTQIA+ communities.</li>
+          <li>My hope is for clients to feel seen, valid in their lived experiences, and empowered to challenge themselves, take steps towards healing from past wounds, and grow in ways that align with their values.</li>
+          <li>I strive to cultivate a therapeutic relationship that promotes independence and enables transparency to increase understanding and growth. If these experiences, questions, and challenges resonate with you, your goals, and your life, then I invite you to connect with me and see if we would be a good match for therapy together.</li>
+        </ul>
+
+        <p><a href="https://www.psychologytoday.com/us/therapists/chris-truong-baltimore-md/1418932" class="profile-link">Psychology Today Profile</a></p>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer-content">
+      <span>&copy; 2025 PRISMATIC MINDS</span>
+    </div>
+  </footer>
+
+  <script>
+    // Simple mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+    });
+  </script>
+</body>
+</html> 
