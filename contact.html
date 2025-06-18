@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prismatic Minds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-background bg-3"></div>
+  <header class="header">
+    <img src="logo.png" alt="Prismatic Minds Logo" class="logo">
+    <nav class="nav" id="nav">
+      <ul class="nav-menu">
+        <li><a href="index.html">About</a></li>
+        <li><a href="care.html">Neurodiversity-Affirming Care</a></li>
+        <li><a href="psypact.html">PSYPACT</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="faq.html">Fees & FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <a href="#get-started" class="btn">Get Started</a>
+    </nav>
+    
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="main-content">
+    <section>
+      <p>To book a session, you can either call me at (410) 262-7372 or fill out the interest form. If you have questions or would like to discuss your needs, we can schedule a quick 15-minute consultation to see if we're a good fit.</p>
+
+      <p>Please include your availability and preferred phone number for me to reach you.</p>
+
+      <p>Note: Email and form submissions are not encrypted, so confidentiality can't be guaranteed. After our consultation, we can schedule your first 60-minute telehealth initial intake session if we decide to work together.</p>
+
+      <form action="https://formsubmit.co/christruongpsyd@gmail.com" method="POST" class="contact-form">
+        <div class="form-group-split">
+          <div class="form-group">
+            <label for="first-name">First Name (required)</label>
+            <input type="text" id="first-name" name="first_name" required>
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name (required)</label>
+            <input type="text" id="last-name" name="last_name" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address (required)</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number (required)</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message (required)</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        
+        <fieldset class="form-group">
+          <legend>How did you find me? (Check all that apply)</legend>
+          <div class="checkbox-option">
+            <input type="checkbox" id="referral" name="found[]" value="Referral">
+            <label for="referral">Referral</label>
+            <input type="text" name="referral_provider" placeholder="Name of provider" class="inline-input">
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="google" name="found[]" value="Google Search">
+            <label for="google">Google Search</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="psychology_today" name="found[]" value="Psychology Today">
+            <label for="psychology_today">Psychology Today</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="social_media" name="found[]" value="Social Media">
+            <label for="social_media">Social Media</label>
+          </div>
+          <div class="checkbox-option">
+            <input type="checkbox" id="other" name="found[]" value="Other">
+            <label for="other">Other</label>
+            <input type="text" name="other_details" placeholder="Please specify" class="inline-input">
+          </div>
+        </fieldset>
+        
+        <button type="submit" class="btn">Submit</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <span>&copy; 2025 PRISMATIC MINDS</span>
+    </div>
+  </footer>
+
+  <script>
+    // Simple mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+    });
+  </script>
+</body>
+</html> 
