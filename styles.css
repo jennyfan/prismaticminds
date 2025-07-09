@@ -169,8 +169,7 @@ a {
   display: flex;
   gap: 2rem;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  padding: 5px;
 }
 .nav-menu li {
     margin: 0;
@@ -200,6 +199,70 @@ a {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s;
+}
+
+/* Dropdown Menu Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  min-width: 240px;
+  max-width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  flex-direction: column;
+  gap: 0 !important;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: #222;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+.dropdown-menu a::after {
+  display: none;
+}
+
+.dropdown-toggle::after {
+  content: ' ▼';
+  font-size: 0.7em;
+  margin-left: 0.5rem;
 }
 
 .btn {
@@ -248,16 +311,14 @@ a {
   max-width: 100%;
   border-radius: 8px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  margin: 0 auto;
 }
 
 .profile {
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
   padding: 2rem 2.5rem;
-  z-index: 0;
-  max-width: 650px;
-  margin: 2rem auto;
+  z-index: 2;
+  width: 80%;
+  text-align: center;
 }
 
 section {
@@ -370,6 +431,28 @@ img {
   .group-grid {
     grid-template-columns: 1fr;
   }
+  
+  /* Mobile dropdown styles */
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    margin: 1rem auto;
+  }
+  
+  .dropdown-menu a {
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .dropdown-toggle::after {
+    display: none;
+  }
 }
 
 .nav.open .nav-menu a::after {
@@ -418,6 +501,7 @@ img {
   font-size: 1rem;
   background-color: #f9f9f9;
   color: #333;
+  box-sizing: border-box;
 }
 
 .contact-form textarea {
@@ -426,7 +510,7 @@ img {
 
 .form-group-split {
   display: flex;
-  gap: 1.5rem;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
@@ -440,6 +524,8 @@ img {
   padding: 1rem 1.5rem;
   border-radius: 4px;
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .contact-form legend {
@@ -502,61 +588,19 @@ img {
   }
 }
 
-/* Expandable Section Styles */
+/* Section Content Styles */
 .full-width-container {
   display: flex;
   flex-direction: column;
 }
-.expandable-section {
-  margin-bottom: 1rem;
-}
 
-.expandable-section summary {
-  cursor: pointer;
-  padding: 1rem 4vw;
-  display: flex;
-  align-items: center;
-  list-style: none; /* Remove default marker */
-}
-
-.expandable-section summary::-webkit-details-marker {
-  display: none; /* Hide for Chrome/Safari */
-}
-
-.expandable-section summary h1 {
-  margin: 0;
-  font-size: 1.75rem;
-  color: #333;
-}
-
-.expandable-section .section-content {
+.section-content {
   padding: 0 4vw 1.5rem 4vw;
 }
 
-.expandable-section .section-content-inner {
-    max-width: 960px;
-    margin: 0 auto;
-}
-
-.expandable-section summary::after {
-  content: '';
-  border-style: solid;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  height: 0.6em;
-  width: 0.6em;
-  transform: rotate(45deg);
-  transition: transform 0.3s ease-in-out;
-  color: #888;
-  margin-left: 1rem;
-}
-
-.expandable-section[open] summary::after {
-  transform: rotate(-135deg);
-}
-
-.expandable-section[open] summary h1 {
-  color: #333;
+.section-content-inner {
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .group-grid {
@@ -568,7 +612,7 @@ img {
 }
 
 .group-card {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid #eee;
@@ -598,4 +642,14 @@ img {
   .group-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.gradient-bg-static {
+  background: linear-gradient(135deg, 
+    var(--color-bg1) 0%, 
+    var(--color-bg2) 25%, 
+    var(--color-bg3) 50%, 
+    var(--color-bg4) 75%, 
+    var(--color-bg5) 100%
+  ) !important;
 }

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultation, Training & Workshops - Prismatic Minds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <a href="index.html"><img src="logo.png" alt="Prismatic Minds Logo" class="logo"></a>
+    <nav class="nav" id="nav">
+      <ul class="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Services</a>
+          <ul class="dropdown-menu">
+            <li><a href="individual-therapy.html">Individual Therapy</a></li>
+            <li><a href="group-therapy.html">Group Therapy</a></li>
+            <li><a href="coaching.html">Coaching</a></li>
+            <li><a href="consultation.html">Consultation & Training</a></li>
+          </ul>
+        </li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+      <a href="contact.html" class="btn">Let's Connect</a>
+    </nav>
+    
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="main-content">
+    <section class="full-width-container">
+      <div class="section-content">
+        <div class="section-content-inner">
+          <h1>Consultation, Training & Workshops</h1>
+          
+          <h4>Creating spaces where all minds and identities are valued.</h4>
+
+          <p>I offer consultation, training, and workshops for clinicians, organizations, and communities committed to building more inclusive, neurodiversity-affirming, and culturally responsive environments.</p>
+          
+          <ul class="group-grid">
+            <li class="group-card">
+              <h3>For Therapists & Providers</h3>
+              <h4>Clinical Consultation</h4>
+              <p>Support for mental health professionals and care teams looking to integrate neurodiversity-affirming practices into their work. Common focus areas include:</p>
+              <ul>
+                <li>Creating inclusive, client-centered care models</li>
+                <li>Building sensory-friendly and accessible environments</li>
+                <li>Using affirming language and avoiding pathologizing approaches</li>
+                <li>Reviewing conceptualization and treatment plans through a neuro-affirming lens</li>
+                <li>Supporting clients with autism, ADHD, dyslexia, and more</li>
+              </ul>
+            </li>
+
+            <li class="group-card">
+                <h3>For Organizations & Communities</h3>
+                <h4>Workplace & Community Consultation</h4>
+                <p>Build a culture where neurodivergent and marginalized individuals can thrive. I partner with businesses, schools, and community groups to create environments that are inclusive, equitable, and effective.</p>
+
+          
+                <p>What I Offer:</p>
+
+                <ul>
+                  <li><b>Leadership & Staff Training</b>:<br />
+                    Equip your team with the tools to support and retain neurodivergent talent through identity-aware practices and psychologically safe environments.</li>
+                  <li><b>Interactive Workshops</b>:<br />
+                    Customizable, hands-on sessions that foster understanding, collaboration, and lasting change. Topics include neurodiversity, executive functioning, sensory inclusion, and more.</li>
+                </ul>
+
+            </li>
+          </ul>
+
+          <h2>Available workshop topics include:</h2>
+
+          <ul>
+            <li><b>Cultivating a Neuro-Affirming Culture</b><br />
+              An introduction to neurodiversity and how to design more inclusive spaces, teams, and systems that embrace cognitive and behavioral differences.</li>
+            <li><b>The Neurodiverse Love Languages</b><br />
+              Explore how different neurotypes express connection and care — and how to build more authentic relationships across communication styles.</li>
+            <li><b>Masking & Unmasking: Being Your Authentic Self</b><br />
+              Learn how masking impacts well-being and discover ways to foster environments where individuals can safely show up as their full selves.</li>
+            <li><b>Disability, Neurodiversity & What It Means to Lead</b><br />
+              Explore leadership through a lens of accessibility and equity — and how to create workplaces where disabled and neurodivergent individuals can succeed and belong.</li>
+            <li><b>Take Care Before You Don't Care</b><br />
+              A timely session on preventing burnout and compassion fatigue through sustainable, personalized self-care and community care strategies.</li>
+            <li><b>Forging Neuro-Affirming Communities on Campus</b><br />
+              Ideal for colleges and universities — learn how interdepartmental collaboration can support the growing population of neurodivergent students in higher ed.</li>
+            <li><b>Interested in customizing a session for your team or hosting a multi-part series?</b><br />
+              Let's build something meaningful together. <a href="contact.html">Inquire to book or learn more.</a></li>
+          </ul>
+
+          <h2>Rates & Packages</h2>
+
+          <ul>
+            <li>Individual Consultation: $250/hour</li>
+            <li>Small Group Consultation (up to 6 people): $500/hour</li>
+            <li>Custom Workshops & Packages: Starting at $2,000 (includes half-day trainings or 4-session packages)</li>
+            <li><em>Need something bigger?</em> Quotes available for multi-session trainings, organizational consulting, or ongoing support.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <span>&copy; 2025 PRISMATIC MINDS</span>
+    </div>
+  </footer>
+
+  <script src="background.js" defer></script>
+  <script>
+    // Simple mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      menuToggle.classList.toggle('open');
+    });
+  </script>
+</body>
+</html> 
