@@ -100,7 +100,7 @@ if ($is_spam) {
 }
 
 // Email configuration
-$to = 'jenny@prismaticpractice.com';
+$to = 'chris@prismaticpractice.com';
 $subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
