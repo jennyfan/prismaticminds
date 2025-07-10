@@ -43,7 +43,10 @@
 
       <p>Note: Email and form submissions are not encrypted under HIPAA-compliant standards, so confidentiality can't be guaranteed.</p>
 
-      <form action="contact-handler.php" method="POST" class="contact-form">
+      <!-- Message container for success/error messages -->
+      <div id="form-message" class="form-message" style="display: none;"></div>
+
+      <form action="contact-handler.php" method="POST" class="contact-form" id="contact-form">
         <div class="form-group-split">
           <div class="form-group">
             <label for="first-name">First Name (required)</label>
@@ -112,6 +115,79 @@
     menuToggle.addEventListener('click', () => {
       nav.classList.toggle('open');
       menuToggle.classList.toggle('open');
+    });
+
+    // Contact form AJAX submission
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const form = this;
+      const formData = new FormData(form);
+      const messageContainer = document.getElementById('form-message');
+      const submitButton = form.querySelector('button[type="submit"]');
+      
+      // Show loading state
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      messageContainer.style.display = 'none';
+      
+      try {
+        const response = await fetch('contact-handler.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        // Clear previous message classes
+        messageContainer.className = 'form-message';
+        
+        if (data.status === 'success') {
+          messageContainer.className += ' success';
+          messageContainer.innerHTML = `
+            <h3>✓ ${data.message}</h3>
+            ${data.additional_info ? `<p>${data.additional_info}</p>` : ''}
+          `;
+          form.reset(); // Clear the form on success
+        } else {
+          messageContainer.className += ' error';
+          let errorHTML = `<h3>⚠ ${data.message}</h3>`;
+          
+          if (data.errors && Array.isArray(data.errors)) {
+            errorHTML += '<ul>';
+            data.errors.forEach(error => {
+              errorHTML += `<li>${error}</li>`;
+            });
+            errorHTML += '</ul>';
+          }
+          
+          if (data.additional_info) {
+            errorHTML += `<p>${data.additional_info}</p>`;
+          }
+          
+          messageContainer.innerHTML = errorHTML;
+        }
+        
+        // Show the message
+        messageContainer.style.display = 'block';
+        
+        // Scroll to the message
+        messageContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+      } catch (error) {
+        console.error('Error:', error);
+        messageContainer.className = 'form-message error';
+        messageContainer.innerHTML = `
+          <h3>⚠ Connection Error</h3>
+          <p>Unable to send your message. Please check your internet connection and try again, or call (410) 262-7372.</p>
+        `;
+        messageContainer.style.display = 'block';
+        messageContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } finally {
+        // Reset button state
+        submitButton.disabled = false;
+        submitButton.textContent = 'Submit';
+      }
     });
   </script>
 </body>

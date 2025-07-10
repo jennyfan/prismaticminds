@@ -1,11 +1,16 @@
 <?php
-// Enable error reporting for debugging (remove in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Contact form handler for Prismatic Minds
+// Remove the debug lines below when deploying to production:
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
+// Set content type to JSON
+header('Content-Type: application/json');
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: contact.html');
+    http_response_code(405);
+    echo json_encode(['status' => 'error', 'message' => 'Method not allowed']);
     exit;
 }
 
@@ -53,20 +58,19 @@ if (empty($message)) {
     $errors[] = "Message is required";
 }
 
-// If there are errors, display them
+// If there are errors, return them
 if (!empty($errors)) {
-    echo "<h2>Please fix the following errors:</h2>";
-    echo "<ul>";
-    foreach ($errors as $error) {
-        echo "<li>" . htmlspecialchars($error) . "</li>";
-    }
-    echo "</ul>";
-    echo "<a href='contact.html'>Go back to form</a>";
+    http_response_code(400);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Please fix the following errors:',
+        'errors' => $errors
+    ]);
     exit;
 }
 
 // Email configuration
-$to = 'test@prismaticpractice.com';
+$to = 'fan.jenny@gmail.com';
 $subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
@@ -109,55 +113,19 @@ $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
 // Send email
 if (mail($to, $subject, $email_body, $headers)) {
-    // Success page
-    echo "<!DOCTYPE html>";
-    echo "<html lang='en'>";
-    echo "<head>";
-    echo "<meta charset='UTF-8'>";
-    echo "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-    echo "<title>Thank You - Prismatic Minds</title>";
-    echo "<link href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap' rel='stylesheet'>";
-    echo "<link rel='stylesheet' href='styles.css'>";
-    echo "</head>";
-    echo "<body>";
-    echo "<header class='header'>";
-    echo "<a href='index.html'><img src='logo.png' alt='Prismatic Minds Logo' class='logo'></a>";
-    echo "</header>";
-    echo "<main class='main-content'>";
-    echo "<section style='text-align: center; padding: 2rem;'>";
-    echo "<h1>Thank You!</h1>";
-    echo "<p>Your message has been sent successfully. I'll get back to you soon.</p>";
-    echo "<p>If you need immediate assistance, please call <strong>(410) 262-7372</strong></p>";
-    echo "<a href='contact.html' class='btn'>Send Another Message</a>";
-    echo "<a href='index.html' class='btn' style='margin-left: 1rem;'>Return Home</a>";
-    echo "</section>";
-    echo "</main>";
-    echo "</body>";
-    echo "</html>";
+    // Success response
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.',
+        'additional_info' => 'If you need immediate assistance, please call (410) 262-7372'
+    ]);
 } else {
-    // Error page
-    echo "<!DOCTYPE html>";
-    echo "<html lang='en'>";
-    echo "<head>";
-    echo "<meta charset='UTF-8'>";
-    echo "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-    echo "<title>Error - Prismatic Minds</title>";
-    echo "<link href='https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap' rel='stylesheet'>";
-    echo "<link rel='stylesheet' href='styles.css'>";
-    echo "</head>";
-    echo "<body>";
-    echo "<header class='header'>";
-    echo "<a href='index.html'><img src='logo.png' alt='Prismatic Minds Logo' class='logo'></a>";
-    echo "</header>";
-    echo "<main class='main-content'>";
-    echo "<section style='text-align: center; padding: 2rem;'>";
-    echo "<h1>Oops! Something went wrong.</h1>";
-    echo "<p>There was an error sending your message. Please try again or call me directly at <strong>(410) 262-7372</strong></p>";
-    echo "<a href='contact.html' class='btn'>Try Again</a>";
-    echo "<a href='index.html' class='btn' style='margin-left: 1rem;'>Return Home</a>";
-    echo "</section>";
-    echo "</main>";
-    echo "</body>";
-    echo "</html>";
+    // Error response
+    http_response_code(500);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Oops! Something went wrong.',
+        'additional_info' => 'There was an error sending your message. Please try again or call me directly at (410) 262-7372'
+    ]);
 }
 ?> 

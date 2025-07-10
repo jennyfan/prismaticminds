@@ -563,6 +563,59 @@ img {
   padding: 0.75rem 2rem;
 }
 
+/* Form Message Styles */
+.form-message {
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid;
+  animation: slideIn 0.3s ease-out;
+}
+
+.form-message.success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.form-message.error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+.form-message h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.form-message p {
+  margin: 0.5rem 0 0 0;
+  color: inherit;
+}
+
+.form-message ul {
+  margin: 0.5rem 0 0 0;
+  padding-left: 1.5rem;
+}
+
+.form-message li {
+  color: inherit;
+  margin-bottom: 0.25rem;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
@@ -652,4 +705,55 @@ img {
     var(--color-bg4) 75%, 
     var(--color-bg5) 100%
   ) !important;
+}
+
+/* CSS Blur Effects for Modern Mobile Devices */
+.gradient-bg-css-blur .gradients-css-blur {
+  filter: blur(20px);
+  position: absolute;
+  top: -10vh;
+  left: -10vw;
+  width: 120vw;
+  height: 120vh;
+}
+
+/* Box-shadow Blur Fallback for Older Devices */
+.gradient-bg-shadow-blur .gradients-shadow-blur {
+  position: absolute;
+  top: -10vh;
+  left: -10vw;
+  width: 120vw;
+  height: 120vh;
+}
+
+.gradient-bg-shadow-blur .g1,
+.gradient-bg-shadow-blur .g2,
+.gradient-bg-shadow-blur .g3,
+.gradient-bg-shadow-blur .g4,
+.gradient-bg-shadow-blur .g5 {
+  box-shadow: 
+    0 0 40px 20px currentColor,
+    0 0 80px 40px rgba(255, 255, 255, 0.1),
+    0 0 120px 60px rgba(255, 255, 255, 0.05);
+  border: none;
+}
+
+.gradient-bg-shadow-blur .g1 {
+  color: var(--color-bg3);
+}
+
+.gradient-bg-shadow-blur .g2 {
+  color: var(--color-bg4);
+}
+
+.gradient-bg-shadow-blur .g3 {
+  color: var(--color-bg5);
+}
+
+.gradient-bg-shadow-blur .g4 {
+  color: var(--color-bg1);
+}
+
+.gradient-bg-shadow-blur .g5 {
+  color: var(--color-bg2);
 }
