@@ -272,6 +272,8 @@ a {
   padding: 0.5em 1em;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  color: #222;
+  font-family: inherit;
 }
 .btn:hover {
   background: #FFEDED;
