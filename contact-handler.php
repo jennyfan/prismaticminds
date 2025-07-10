@@ -69,8 +69,38 @@ if (!empty($errors)) {
     exit;
 }
 
+// Basic spam detection
+$spam_patterns = [
+    'a@a.com', 'test@test.com', 'example@example.com', 
+    'noreply@', 'no-reply@', 'admin@admin.com'
+];
+
+$is_spam = false;
+foreach ($spam_patterns as $pattern) {
+    if (stripos($email, $pattern) !== false) {
+        $is_spam = true;
+        break;
+    }
+}
+
+// Check for obvious fake names
+if (preg_match('/^[a-z][\s]*[a-z]$/i', trim($first_name . ' ' . $last_name)) || 
+    strlen(trim($first_name . ' ' . $last_name)) < 3) {
+    $is_spam = true;
+}
+
+if ($is_spam) {
+    http_response_code(400);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Please provide valid contact information.',
+        'additional_info' => 'If you need immediate assistance, please call (410) 262-7372'
+    ]);
+    exit;
+}
+
 // Email configuration
-$to = 'fan.jenny@gmail.com';
+$to = 'jenny@prismaticpractice.com';
 $subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
@@ -89,27 +119,37 @@ if (!empty($found_me)) {
     $found_me_text = implode(', ', $found_me_formatted);
 }
 
-// Create email body
-$email_body = "New Contact Form Submission\n";
-$email_body .= "============================\n\n";
+// Create email body with better formatting
+$email_body = "You have received a new contact form submission from your Prismatic Minds website.\n\n";
+$email_body .= "CONTACT INFORMATION:\n";
 $email_body .= "Name: " . $first_name . " " . $last_name . "\n";
 $email_body .= "Email: " . $email . "\n";
 $email_body .= "Phone: " . $phone . "\n\n";
-$email_body .= "Message:\n" . $message . "\n\n";
+$email_body .= "MESSAGE:\n";
+$email_body .= $message . "\n\n";
 
 if (!empty($found_me_text)) {
-    $email_body .= "How they found you: " . $found_me_text . "\n\n";
+    $email_body .= "HOW THEY FOUND YOU:\n";
+    $email_body .= $found_me_text . "\n\n";
 }
 
 $email_body .= "---\n";
-$email_body .= "This email was sent from the Prismatic Minds contact form.\n";
-$email_body .= "Submitted on: " . date('Y-m-d H:i:s') . "\n";
+$email_body .= "This message was sent from the contact form on prismaticpractice.com\n";
+$email_body .= "Submitted: " . date('F j, Y \a\t g:i A T') . "\n";
+$email_body .= "IP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
 
-// Email headers
-$headers = "From: " . $email . "\r\n";
-$headers .= "Reply-To: " . $email . "\r\n";
+// Email headers - Use domain email for From, user email for Reply-To
+$from_email = "chris@prismaticpractice.com";
+$from_name = "Prismatic Minds Contact Form";
+
+$headers = "From: " . $from_name . " <" . $from_email . ">\r\n";
+$headers .= "Reply-To: " . $first_name . " " . $last_name . " <" . $email . ">\r\n";
+$headers .= "Return-Path: " . $from_email . "\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+$headers .= "X-Priority: 3\r\n";
+$headers .= "X-MSMail-Priority: Normal\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$headers .= "MIME-Version: 1.0\r\n";
 
 // Send email
 if (mail($to, $subject, $email_body, $headers)) {
