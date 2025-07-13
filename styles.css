@@ -649,10 +649,6 @@ img {
   flex-direction: column;
 }
 
-.section-content {
-  padding: 0 4vw 1.5rem 4vw;
-}
-
 .section-content-inner {
   max-width: 960px;
   margin: 0 auto;
@@ -688,11 +684,8 @@ img {
 }
 
 .group-img {
-  max-width: 100%;
-  height: auto;
   border-radius: 4px;
   margin-bottom: 1rem;
-  object-fit: contain;
 }
 
 @media (max-width: 800px) {
