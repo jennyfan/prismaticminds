@@ -714,7 +714,7 @@ img {
   height: 120vh;
 }
 
-/* Box-shadow Blur Fallback for Older Devices */
+/* Radial Gradient Fallback for Mobile Devices */
 .gradient-bg-shadow-blur .gradients-shadow-blur {
   position: absolute;
   top: -10vh;
@@ -728,29 +728,26 @@ img {
 .gradient-bg-shadow-blur .g3,
 .gradient-bg-shadow-blur .g4,
 .gradient-bg-shadow-blur .g5 {
-  box-shadow: 
-    0 0 40px 20px currentColor,
-    0 0 80px 40px rgba(255, 255, 255, 0.1),
-    0 0 120px 60px rgba(255, 255, 255, 0.05);
   border: none;
+  opacity: 0.8;
 }
 
 .gradient-bg-shadow-blur .g1 {
-  color: var(--color-bg3);
+  background: radial-gradient(circle, var(--color-bg3) 0%, rgba(255, 227, 213, 0.6) 40%, transparent 70%);
 }
 
 .gradient-bg-shadow-blur .g2 {
-  color: var(--color-bg4);
+  background: radial-gradient(circle, var(--color-bg4) 0%, rgba(177, 241, 243, 0.6) 40%, transparent 70%);
 }
 
 .gradient-bg-shadow-blur .g3 {
-  color: var(--color-bg5);
+  background: radial-gradient(circle, var(--color-bg5) 0%, rgba(253, 240, 233, 0.6) 40%, transparent 70%);
 }
 
 .gradient-bg-shadow-blur .g4 {
-  color: var(--color-bg1);
+  background: radial-gradient(circle, var(--color-bg1) 0%, rgba(255, 255, 255, 0.6) 40%, transparent 70%);
 }
 
 .gradient-bg-shadow-blur .g5 {
-  color: var(--color-bg2);
+  background: radial-gradient(circle, var(--color-bg2) 0%, rgba(253, 251, 237, 0.6) 40%, transparent 70%);
 }
