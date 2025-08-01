@@ -751,3 +751,43 @@ img {
 .gradient-bg-shadow-blur .g5 {
   background: radial-gradient(circle, var(--color-bg2) 0%, rgba(253, 251, 237, 0.6) 40%, transparent 70%);
 }
+
+/* Mobile-friendly version with no blur effects for maximum compatibility */
+.gradient-bg-mobile .gradients-mobile {
+  position: absolute;
+  top: -10vh;
+  left: -10vw;
+  width: 120vw;
+  height: 120vh;
+  /* No filter effects for mobile compatibility */
+}
+
+.gradient-bg-mobile .g1,
+.gradient-bg-mobile .g2,
+.gradient-bg-mobile .g3,
+.gradient-bg-mobile .g4,
+.gradient-bg-mobile .g5 {
+  border: none;
+  opacity: 0.7;
+  mix-blend-mode: multiply;
+}
+
+.gradient-bg-mobile .g1 {
+  background: radial-gradient(circle, var(--color-bg3) 0%, rgba(255, 227, 213, 0.4) 50%, transparent 80%);
+}
+
+.gradient-bg-mobile .g2 {
+  background: radial-gradient(circle, var(--color-bg4) 0%, rgba(177, 241, 243, 0.4) 50%, transparent 80%);
+}
+
+.gradient-bg-mobile .g3 {
+  background: radial-gradient(circle, var(--color-bg5) 0%, rgba(253, 240, 233, 0.4) 50%, transparent 80%);
+}
+
+.gradient-bg-mobile .g4 {
+  background: radial-gradient(circle, var(--color-bg1) 0%, rgba(255, 255, 255, 0.4) 50%, transparent 80%);
+}
+
+.gradient-bg-mobile .g5 {
+  background: radial-gradient(circle, var(--color-bg2) 0%, rgba(253, 251, 237, 0.4) 50%, transparent 80%);
+}

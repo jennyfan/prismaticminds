@@ -1,35 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Simplified feature detection: SVG or box-shadow fallback
-  function getBlurSupport() {
-    // Test for SVG filter support
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
-    const blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
-    
-    try {
-      filter.appendChild(blur);
-      svg.appendChild(filter);
-      document.body.appendChild(svg);
-      
-      const supportsSVGFilters = typeof blur.stdDeviationX !== 'undefined';
-      
-      document.body.removeChild(svg);
-      
-      if (supportsSVGFilters) {
-        return 'svg';
-      }
-    } catch (e) {
-      if (svg.parentNode) document.body.removeChild(svg);
-    }
-    
-    // Default to box-shadow fallback for everything else
-    return 'shadow';
+  // Simple mobile detection for compatibility
+  function isMobileDevice() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+           window.innerWidth <= 768;
   }
 
-  const blurSupport = getBlurSupport();
+  const isMobile = isMobileDevice();
 
-  if (blurSupport === 'svg') {
-    // Full animated background with SVG filters
+  if (isMobile) {
+    // Mobile-friendly version with radial gradients (no blur effects)
+    const backgroundHTML = `
+      <div class="gradient-bg gradient-bg-mobile">
+        <div class="gradients-container gradients-mobile">
+          <div class="g1"></div>
+          <div class="g2"></div>
+          <div class="g3"></div>
+          <div class="g4"></div>
+          <div class="g5"></div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('afterbegin', backgroundHTML);
+  } else {
+    // Desktop version with SVG filters
     const backgroundHTML = `
       <div class="gradient-bg">
         <svg xmlns="http://www.w3.org/2000/svg">
@@ -42,20 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
           </defs>
         </svg>
         <div class="gradients-container">
-          <div class="g1"></div>
-          <div class="g2"></div>
-          <div class="g3"></div>
-          <div class="g4"></div>
-          <div class="g5"></div>
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML('afterbegin', backgroundHTML);
-  } else {
-    // Box-shadow blur fallback for maximum compatibility
-    const backgroundHTML = `
-      <div class="gradient-bg gradient-bg-shadow-blur">
-        <div class="gradients-container gradients-shadow-blur">
           <div class="g1"></div>
           <div class="g2"></div>
           <div class="g3"></div>
