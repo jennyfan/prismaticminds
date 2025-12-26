@@ -139,20 +139,41 @@ $email_body .= "Submitted: " . date('F j, Y \a\t g:i A T') . "\n";
 $email_body .= "IP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
 
 // Email headers - Use domain email for From, user email for Reply-To
+// If emails don't send, try changing From to "noreply@prismaticpractice.com"
 $from_email = "chris@prismaticpractice.com";
 $from_name = "Prismatic Minds Contact Form";
 
 $headers = "From: " . $from_name . " <" . $from_email . ">\r\n";
 $headers .= "Reply-To: " . $first_name . " " . $last_name . " <" . $email . ">\r\n";
-$headers .= "Return-Path: " . $from_email . "\r\n";
+$headers .= "Return-Path: chris@prismaticpractice.com\r\n";
 $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-$headers .= "X-Priority: 3\r\n";
-$headers .= "X-MSMail-Priority: Normal\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 $headers .= "MIME-Version: 1.0\r\n";
 
+// Log email attempt
+$log_entry = date('Y-m-d H:i:s') . " - Attempting to send email\n";
+$log_entry .= "To: $to\n";
+$log_entry .= "From: $from_email\n";
+$log_entry .= "Subject: $subject\n";
+$log_entry .= "Reply-To: $email\n";
+error_log($log_entry);
+
+// Clear any previous errors
+$last_error = error_get_last();
+
 // Send email
-if (mail($to, $subject, $email_body, $headers)) {
+$mail_result = mail($to, $subject, $email_body, $headers);
+
+// Log result and any errors
+$log_result = date('Y-m-d H:i:s') . " - Mail function result: " . ($mail_result ? "SUCCESS" : "FAILED") . "\n";
+$current_error = error_get_last();
+if ($current_error && $current_error !== $last_error) {
+    $log_result .= "PHP Error: " . $current_error['message'] . " in " . $current_error['file'] . ":" . $current_error['line'] . "\n";
+}
+$log_result .= "---\n";
+error_log($log_result);
+
+if ($mail_result) {
     // Success response
     echo json_encode([
         'status' => 'success',
