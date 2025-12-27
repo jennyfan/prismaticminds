@@ -100,7 +100,7 @@ if ($is_spam) {
 }
 
 // Email configuration
-$to = 'chris@prismaticpractice.com';
+$to = 'me@jennyfan.com';
 $subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
@@ -141,7 +141,7 @@ $email_body .= "IP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
 // Email headers - Use domain email for From, user email for Reply-To
 // If emails don't send, try changing From to "noreply@prismaticpractice.com"
 $from_email = "chris@prismaticpractice.com";
-$from_name = "Prismatic Minds Contact Form";
+$from_name = "Prismatic Minds";
 
 $headers = "From: " . $from_name . " <" . $from_email . ">\r\n";
 $headers .= "Reply-To: " . $first_name . " " . $last_name . " <" . $email . ">\r\n";
