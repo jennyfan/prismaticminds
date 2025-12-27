@@ -138,17 +138,94 @@ $email_body .= "This message was sent from the contact form on prismaticpractice
 $email_body .= "Submitted: " . date('F j, Y \a\t g:i A T') . "\n";
 $email_body .= "IP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
 
-// Email headers - Use domain email for From, user email for Reply-To
-// If emails don't send, try changing From to "noreply@prismaticpractice.com"
+// Simple SMTP email sending function
+function send_email_smtp($to, $subject, $body, $from_email, $from_name, $reply_to) {
+    // Use localhost SMTP (server's mail server)
+    $smtp_host = 'localhost';
+    $smtp_port = 25;
+    
+    // Try to connect to SMTP server
+    $smtp = @fsockopen($smtp_host, $smtp_port, $errno, $errstr, 10);
+    
+    if (!$smtp) {
+        error_log("SMTP Connection failed: $errstr ($errno)");
+        // Fallback to mail() function
+        $headers = "From: $from_name <$from_email>\r\n";
+        $headers .= "Reply-To: $reply_to\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        return mail($to, $subject, $body, $headers);
+    }
+    
+    // Read server greeting
+    $response = fgets($smtp, 515);
+    if (substr($response, 0, 3) != '220') {
+        fclose($smtp);
+        error_log("SMTP Error: $response");
+        return false;
+    }
+    
+    // Send HELO
+    fputs($smtp, "HELO localhost\r\n");
+    $response = fgets($smtp, 515);
+    
+    // Send MAIL FROM
+    fputs($smtp, "MAIL FROM: <$from_email>\r\n");
+    $response = fgets($smtp, 515);
+    if (substr($response, 0, 3) != '250') {
+        fclose($smtp);
+        error_log("SMTP MAIL FROM Error: $response");
+        return false;
+    }
+    
+    // Send RCPT TO
+    fputs($smtp, "RCPT TO: <$to>\r\n");
+    $response = fgets($smtp, 515);
+    if (substr($response, 0, 3) != '250') {
+        fclose($smtp);
+        error_log("SMTP RCPT TO Error: $response");
+        return false;
+    }
+    
+    // Send DATA
+    fputs($smtp, "DATA\r\n");
+    $response = fgets($smtp, 515);
+    if (substr($response, 0, 3) != '354') {
+        fclose($smtp);
+        error_log("SMTP DATA Error: $response");
+        return false;
+    }
+    
+    // Send email headers and body
+    $email_data = "From: $from_name <$from_email>\r\n";
+    $email_data .= "To: <$to>\r\n";
+    $email_data .= "Reply-To: $reply_to\r\n";
+    $email_data .= "Subject: $subject\r\n";
+    $email_data .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    $email_data .= "MIME-Version: 1.0\r\n";
+    $email_data .= "\r\n";
+    $email_data .= $body;
+    $email_data .= "\r\n.\r\n";
+    
+    fputs($smtp, $email_data);
+    $response = fgets($smtp, 515);
+    
+    // Send QUIT
+    fputs($smtp, "QUIT\r\n");
+    fclose($smtp);
+    
+    if (substr($response, 0, 3) == '250') {
+        return true;
+    } else {
+        error_log("SMTP Send Error: $response");
+        return false;
+    }
+}
+
+// Email configuration
 $from_email = "chris@prismaticpractice.com";
 $from_name = "Prismatic Minds";
-
-$headers = "From: " . $from_name . " <" . $from_email . ">\r\n";
-$headers .= "Reply-To: " . $first_name . " " . $last_name . " <" . $email . ">\r\n";
-$headers .= "Return-Path: chris@prismaticpractice.com\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
+$reply_to = $first_name . " " . $last_name . " <" . $email . ">";
 
 // Log email attempt
 $log_entry = date('Y-m-d H:i:s') . " - Attempting to send email\n";
@@ -161,8 +238,8 @@ error_log($log_entry);
 // Clear any previous errors
 $last_error = error_get_last();
 
-// Send email
-$mail_result = mail($to, $subject, $email_body, $headers);
+// Send email using SMTP
+$mail_result = send_email_smtp($to, $subject, $email_body, $from_email, $from_name, $reply_to);
 
 // Log result and any errors
 $log_result = date('Y-m-d H:i:s') . " - Mail function result: " . ($mail_result ? "SUCCESS" : "FAILED") . "\n";
