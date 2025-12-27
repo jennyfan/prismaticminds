@@ -184,8 +184,15 @@ try {
     // Send email
     $mail->send();
     
-    // Log success
-    $log_result = date('Y-m-d H:i:s') . " - Mail sent successfully\n";
+    // Log success with full details
+    $log_result = date('Y-m-d H:i:s') . " - Mail sent successfully via PHPMailer\n";
+    $log_result .= "SMTP Server: smtp.gmail.com:587\n";
+    $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
+    $log_result .= "To: $to\n";
+    $log_result .= "From: chris@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "Reply-To: $email (" . $first_name . " " . $last_name . ")\n";
+    $log_result .= "Subject: $subject\n";
+    $log_result .= "Message ID: " . $mail->getLastMessageID() . "\n";
     $log_result .= "---\n";
     error_log($log_result);
     
@@ -197,9 +204,16 @@ try {
     ]);
     
 } catch (Exception $e) {
-    // Log error details
-    $log_result = date('Y-m-d H:i:s') . " - Mail sending failed\n";
-    $log_result .= "Error: " . $mail->ErrorInfo . "\n";
+    // Log error details with full context
+    $log_result = date('Y-m-d H:i:s') . " - Mail sending failed via PHPMailer\n";
+    $log_result .= "SMTP Server: smtp.gmail.com:587\n";
+    $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
+    $log_result .= "To: $to\n";
+    $log_result .= "From: chris@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "Reply-To: $email (" . $first_name . " " . $last_name . ")\n";
+    $log_result .= "Subject: $subject\n";
+    $log_result .= "PHPMailer Error: " . $mail->ErrorInfo . "\n";
+    $log_result .= "Exception: " . $e->getMessage() . "\n";
     $log_result .= "---\n";
     error_log($log_result);
     
