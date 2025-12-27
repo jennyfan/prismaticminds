@@ -100,7 +100,7 @@ if ($is_spam) {
 }
 
 // Email configuration
-$to = 'me@jennyfan.com';
+$to = 'fan.jenny@gmail.com';
 $subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
