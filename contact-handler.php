@@ -169,6 +169,7 @@ try {
     
     // Email addresses
     $mail->setFrom('noreply@prismaticpractice.com', 'Prismatic Minds');
+    $mail->Sender = 'noreply@prismaticpractice.com'; // Enforce envelope sender
     $mail->addAddress($to);
     $mail->addReplyTo($email, $first_name . ' ' . $last_name);
     
