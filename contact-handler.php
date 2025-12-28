@@ -160,12 +160,20 @@ $mail = new PHPMailer(true);
 try {
     // SMTP configuration - Using Namecheap SMTP
     $mail->isSMTP();
-    $mail->Host       = 'mail.prismaticpractice.com'; // Namecheap SMTP server (update if different)
+    $mail->Host       = 'server60.web-hosting.com'; // Namecheap SMTP server
     $mail->SMTPAuth   = true;
     $mail->Username   = $email_config['smtp_username'];
     $mail->Password   = $email_config['smtp_password'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587; // TLS port (if this doesn't work, try 465 with ENCRYPTION_SMTPS)
+    // Disable strict certificate verification for Namecheap's wildcard certificate
+    $mail->SMTPOptions = array(
+        'ssl' => array(
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+        )
+    );
     
     // Email addresses
     $mail->setFrom('contact@prismaticpractice.com', 'Prismatic Minds');
@@ -184,7 +192,7 @@ try {
     
     // Log success with full details including message content
     $log_result = date('Y-m-d H:i:s') . " - Mail sent successfully via PHPMailer\n";
-    $log_result .= "SMTP Server: mail.prismaticpractice.com:587\n";
+    $log_result .= "SMTP Server: server60.web-hosting.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
     $log_result .= "From: contact@prismaticpractice.com (Prismatic Minds)\n";
@@ -206,7 +214,7 @@ try {
 } catch (Exception $e) {
     // Log error details with full context including message content
     $log_result = date('Y-m-d H:i:s') . " - Mail sending failed via PHPMailer\n";
-    $log_result .= "SMTP Server: mail.prismaticpractice.com:587\n";
+    $log_result .= "SMTP Server: server60.web-hosting.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
     $log_result .= "From: contact@prismaticpractice.com (Prismatic Minds)\n";
