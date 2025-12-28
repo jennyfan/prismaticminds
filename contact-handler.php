@@ -111,7 +111,7 @@ if ($is_spam) {
 }
 
 // Email configuration
-$to = 'chris@prismaticpractice.com';
+$to = 'me@jennyfan.com'; // Temporarily changed for testing
 $subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
