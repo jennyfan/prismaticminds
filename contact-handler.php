@@ -166,6 +166,7 @@ try {
     $mail->Password   = $email_config['smtp_password'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587; // TLS port (if this doesn't work, try 465 with ENCRYPTION_SMTPS)
+    $mail->Timeout = 30; // 30 second timeout
     // Disable strict certificate verification for Namecheap's wildcard certificate
     $mail->SMTPOptions = array(
         'ssl' => array(
