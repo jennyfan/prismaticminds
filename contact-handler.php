@@ -112,7 +112,7 @@ if ($is_spam) {
 
 // Email configuration
 $to = 'me@jennyfan.com'; // Temporarily changed for testing
-$subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
+$subject = 'Form submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
 $found_me_text = '';
@@ -131,13 +131,14 @@ if (!empty($found_me)) {
 }
 
 // Create email body with better formatting
+// Decode HTML entities for email (plain text, not HTML)
 $email_body = "A new contact form submission has been received from your Prismatic Minds website.\n\n";
 $email_body .= "Contact Information:\n";
-$email_body .= "Name: " . $first_name . " " . $last_name . "\n";
-$email_body .= "Email: " . $email . "\n";
-$email_body .= "Phone: " . $phone . "\n\n";
+$email_body .= "Name: " . html_entity_decode($first_name, ENT_QUOTES, 'UTF-8') . " " . html_entity_decode($last_name, ENT_QUOTES, 'UTF-8') . "\n";
+$email_body .= "Email: " . html_entity_decode($email, ENT_QUOTES, 'UTF-8') . "\n";
+$email_body .= "Phone: " . html_entity_decode($phone, ENT_QUOTES, 'UTF-8') . "\n\n";
 $email_body .= "Message:\n";
-$email_body .= $message . "\n\n";
+$email_body .= html_entity_decode($message, ENT_QUOTES, 'UTF-8') . "\n\n";
 
 if (!empty($found_me_text)) {
     $email_body .= "How they found you:\n";
@@ -174,7 +175,8 @@ try {
     $mail->setFrom('noreply@prismaticpractice.com', 'Prismatic Minds');
     $mail->Sender = 'noreply@prismaticpractice.com'; // Enforce envelope sender
     $mail->addAddress($to);
-    $mail->addReplyTo($email, $first_name . ' ' . $last_name);
+    // Decode HTML entities for Reply-To name
+    $mail->addReplyTo(html_entity_decode($email, ENT_QUOTES, 'UTF-8'), html_entity_decode($first_name . ' ' . $last_name, ENT_QUOTES, 'UTF-8'));
     
     // Email content
     $mail->isHTML(false);
