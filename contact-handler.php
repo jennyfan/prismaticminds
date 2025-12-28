@@ -142,7 +142,7 @@ $email_body .= html_entity_decode($message, ENT_QUOTES, 'UTF-8') . "\n\n";
 
 if (!empty($found_me_text)) {
     $email_body .= "How they found you:\n";
-    $email_body .= $found_me_text . "\n\n";
+    $email_body .= html_entity_decode($found_me_text, ENT_QUOTES, 'UTF-8') . "\n\n";
 }
 
 $email_body .= "---\n";
