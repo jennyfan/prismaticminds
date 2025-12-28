@@ -149,7 +149,7 @@ $email_body .= "IP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
 // Log email attempt
 $log_entry = date('Y-m-d H:i:s') . " - Attempting to send email\n";
 $log_entry .= "To: $to\n";
-$log_entry .= "From: noreply@prismaticpractice.com\n";
+$log_entry .= "From: contact@prismaticpractice.com\n";
 $log_entry .= "Subject: $subject\n";
 $log_entry .= "Reply-To: $email\n";
 error_log($log_entry);
@@ -158,18 +158,18 @@ error_log($log_entry);
 $mail = new PHPMailer(true);
 
 try {
-    // SMTP configuration
+    // SMTP configuration - Using Namecheap SMTP
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';
+    $mail->Host       = 'mail.prismaticpractice.com'; // Namecheap SMTP server (update if different)
     $mail->SMTPAuth   = true;
     $mail->Username   = $email_config['smtp_username'];
     $mail->Password   = $email_config['smtp_password'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 587;
+    $mail->Port       = 587; // TLS port (if this doesn't work, try 465 with ENCRYPTION_SMTPS)
     
     // Email addresses
-    $mail->setFrom('noreply@prismaticpractice.com', 'Prismatic Minds');
-    $mail->Sender = 'noreply@prismaticpractice.com'; // Enforce envelope sender
+    $mail->setFrom('contact@prismaticpractice.com', 'Prismatic Minds');
+    $mail->Sender = 'contact@prismaticpractice.com'; // Enforce envelope sender
     $mail->addAddress($to);
     $mail->addReplyTo($email, $first_name . ' ' . $last_name);
     
@@ -184,10 +184,10 @@ try {
     
     // Log success with full details including message content
     $log_result = date('Y-m-d H:i:s') . " - Mail sent successfully via PHPMailer\n";
-    $log_result .= "SMTP Server: smtp.gmail.com:587\n";
+    $log_result .= "SMTP Server: mail.prismaticpractice.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
-    $log_result .= "From: noreply@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "From: contact@prismaticpractice.com (Prismatic Minds)\n";
     $log_result .= "Reply-To: $email (" . $first_name . " " . $last_name . ")\n";
     $log_result .= "Subject: $subject\n";
     $log_result .= "Message ID: " . $mail->getLastMessageID() . "\n";
@@ -206,10 +206,10 @@ try {
 } catch (Exception $e) {
     // Log error details with full context including message content
     $log_result = date('Y-m-d H:i:s') . " - Mail sending failed via PHPMailer\n";
-    $log_result .= "SMTP Server: smtp.gmail.com:587\n";
+    $log_result .= "SMTP Server: mail.prismaticpractice.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
-    $log_result .= "From: noreply@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "From: contact@prismaticpractice.com (Prismatic Minds)\n";
     $log_result .= "Reply-To: $email (" . $first_name . " " . $last_name . ")\n";
     $log_result .= "Subject: $subject\n";
     $log_result .= "PHPMailer Error: " . $mail->ErrorInfo . "\n";
