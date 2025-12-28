@@ -149,7 +149,7 @@ $email_body .= "IP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
 // Log email attempt
 $log_entry = date('Y-m-d H:i:s') . " - Attempting to send email\n";
 $log_entry .= "To: $to\n";
-$log_entry .= "From: contact@prismaticpractice.com\n";
+$log_entry .= "From: noreply@prismaticpractice.com\n";
 $log_entry .= "Subject: $subject\n";
 $log_entry .= "Reply-To: chris@prismaticpractice.com\n";
 error_log($log_entry);
@@ -176,10 +176,10 @@ try {
     );
     
     // Email addresses
-    $mail->setFrom('contact@prismaticpractice.com', 'Prismatic Minds');
-    $mail->Sender = 'contact@prismaticpractice.com'; // Enforce envelope sender
+    $mail->setFrom('noreply@prismaticpractice.com', 'Prismatic Minds');
+    $mail->Sender = 'noreply@prismaticpractice.com'; // Enforce envelope sender
     $mail->addAddress($to);
-    $mail->addReplyTo('chris@prismaticpractice.com', 'Prismatic Minds');
+    $mail->addReplyTo('chris@prismaticpractice.com', 'Chris Truong');
     
     // Email content
     $mail->isHTML(false);
@@ -195,8 +195,8 @@ try {
     $log_result .= "SMTP Server: server60.web-hosting.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
-    $log_result .= "From: contact@prismaticpractice.com (Prismatic Minds)\n";
-    $log_result .= "Reply-To: chris@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "From: noreply@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "Reply-To: chris@prismaticpractice.com (Chris Truong)\n";
     $log_result .= "Subject: $subject\n";
     $log_result .= "Message ID: " . $mail->getLastMessageID() . "\n";
     $log_result .= "\nEmail Content:\n";
@@ -217,8 +217,8 @@ try {
     $log_result .= "SMTP Server: server60.web-hosting.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
-    $log_result .= "From: contact@prismaticpractice.com (Prismatic Minds)\n";
-    $log_result .= "Reply-To: chris@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "From: noreply@prismaticpractice.com (Prismatic Minds)\n";
+    $log_result .= "Reply-To: chris@prismaticpractice.com (Chris Truong)\n";
     $log_result .= "Subject: $subject\n";
     $log_result .= "PHPMailer Error: " . $mail->ErrorInfo . "\n";
     $log_result .= "Exception: " . $e->getMessage() . "\n";
