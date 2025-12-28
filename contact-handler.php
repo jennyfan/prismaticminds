@@ -131,21 +131,18 @@ if (!empty($found_me)) {
 }
 
 // Create email body with better formatting
-$email_body = "You have received a new contact form submission from your Prismatic Minds website.\n\n";
-$email_body .= "CONTACT INFORMATION:\n";
 $email_body .= "Name: " . $first_name . " " . $last_name . "\n";
 $email_body .= "Email: " . $email . "\n";
 $email_body .= "Phone: " . $phone . "\n\n";
-$email_body .= "MESSAGE:\n";
+$email_body .= "Message:\n";
 $email_body .= $message . "\n\n";
 
 if (!empty($found_me_text)) {
-    $email_body .= "HOW THEY FOUND YOU:\n";
+    $email_body .= "How they found you:\n";
     $email_body .= $found_me_text . "\n\n";
 }
 
 $email_body .= "---\n";
-$email_body .= "This message was sent from the contact form on prismaticpractice.com\n";
 $email_body .= "Submitted: " . date('F j, Y \a\t g:i A T') . "\n";
 $email_body .= "IP Address: " . $_SERVER['REMOTE_ADDR'] . "\n";
 
