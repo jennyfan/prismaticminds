@@ -131,6 +131,8 @@ if (!empty($found_me)) {
 }
 
 // Create email body with better formatting
+$email_body = "A new contact form submission has been received from your Prismatic Minds website.\n\n";
+$email_body .= "Contact Information:\n";
 $email_body .= "Name: " . $first_name . " " . $last_name . "\n";
 $email_body .= "Email: " . $email . "\n";
 $email_body .= "Phone: " . $phone . "\n\n";
@@ -187,6 +189,12 @@ try {
     $mail->Subject = $subject;
     $mail->Body    = $email_body;
     $mail->CharSet = 'UTF-8';
+    
+    // Add headers to improve deliverability and reduce spam filtering
+    $mail->addCustomHeader('X-Mailer', 'Prismatic Minds Contact Form');
+    $mail->addCustomHeader('X-Priority', '3');
+    $mail->addCustomHeader('Precedence', 'bulk');
+    $mail->addCustomHeader('Auto-Submitted', 'auto-generated');
     
     // Send email
     $mail->send();
