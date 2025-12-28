@@ -111,7 +111,7 @@ if ($is_spam) {
 }
 
 // Email configuration
-$to = 'fan.jenny@gmail.com';
+$to = 'chris@prismaticpractice.com';
 $subject = 'New Contact Form Submission from ' . $first_name . ' ' . $last_name;
 
 // Format the "How did you find me?" section
@@ -184,7 +184,7 @@ try {
     // Send email
     $mail->send();
     
-    // Log success with full details
+    // Log success with full details including message content
     $log_result = date('Y-m-d H:i:s') . " - Mail sent successfully via PHPMailer\n";
     $log_result .= "SMTP Server: smtp.gmail.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
@@ -193,6 +193,8 @@ try {
     $log_result .= "Reply-To: $email (" . $first_name . " " . $last_name . ")\n";
     $log_result .= "Subject: $subject\n";
     $log_result .= "Message ID: " . $mail->getLastMessageID() . "\n";
+    $log_result .= "\nEmail Content:\n";
+    $log_result .= $email_body . "\n";
     $log_result .= "---\n";
     error_log($log_result);
     
@@ -204,7 +206,7 @@ try {
     ]);
     
 } catch (Exception $e) {
-    // Log error details with full context
+    // Log error details with full context including message content
     $log_result = date('Y-m-d H:i:s') . " - Mail sending failed via PHPMailer\n";
     $log_result .= "SMTP Server: smtp.gmail.com:587\n";
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
@@ -214,6 +216,8 @@ try {
     $log_result .= "Subject: $subject\n";
     $log_result .= "PHPMailer Error: " . $mail->ErrorInfo . "\n";
     $log_result .= "Exception: " . $e->getMessage() . "\n";
+    $log_result .= "\nEmail Content (that failed to send):\n";
+    $log_result .= $email_body . "\n";
     $log_result .= "---\n";
     error_log($log_result);
     
