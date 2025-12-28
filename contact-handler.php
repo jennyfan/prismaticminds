@@ -151,7 +151,7 @@ $log_entry = date('Y-m-d H:i:s') . " - Attempting to send email\n";
 $log_entry .= "To: $to\n";
 $log_entry .= "From: noreply@prismaticpractice.com\n";
 $log_entry .= "Subject: $subject\n";
-$log_entry .= "Reply-To: chris@prismaticpractice.com\n";
+$log_entry .= "Reply-To: $email\n";
 error_log($log_entry);
 
 // Send email using PHPMailer
@@ -179,7 +179,7 @@ try {
     $mail->setFrom('noreply@prismaticpractice.com', 'Prismatic Minds');
     $mail->Sender = 'noreply@prismaticpractice.com'; // Enforce envelope sender
     $mail->addAddress($to);
-    $mail->addReplyTo('chris@prismaticpractice.com', 'Chris Truong');
+    $mail->addReplyTo($email, $first_name . ' ' . $last_name);
     
     // Email content
     $mail->isHTML(false);
@@ -196,7 +196,7 @@ try {
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
     $log_result .= "From: noreply@prismaticpractice.com (Prismatic Minds)\n";
-    $log_result .= "Reply-To: chris@prismaticpractice.com (Chris Truong)\n";
+    $log_result .= "Reply-To: $email (" . $first_name . " " . $last_name . ")\n";
     $log_result .= "Subject: $subject\n";
     $log_result .= "Message ID: " . $mail->getLastMessageID() . "\n";
     $log_result .= "\nEmail Content:\n";
@@ -218,7 +218,7 @@ try {
     $log_result .= "Authenticated as: " . $email_config['smtp_username'] . "\n";
     $log_result .= "To: $to\n";
     $log_result .= "From: noreply@prismaticpractice.com (Prismatic Minds)\n";
-    $log_result .= "Reply-To: chris@prismaticpractice.com (Chris Truong)\n";
+    $log_result .= "Reply-To: $email (" . $first_name . " " . $last_name . ")\n";
     $log_result .= "Subject: $subject\n";
     $log_result .= "PHPMailer Error: " . $mail->ErrorInfo . "\n";
     $log_result .= "Exception: " . $e->getMessage() . "\n";
