@@ -1,0 +1,49 @@
+name: Deploy to production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy to Namecheap
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.NAMECHEAP_SSH_PRIVATE_KEY }}
+        run: |
+          if [ -z "$SSH_PRIVATE_KEY" ]; then
+            echo "Missing NAMECHEAP_SSH_PRIVATE_KEY secret."
+            echo "Run: ./scripts/setup-github-deploy.sh"
+            exit 1
+          fi
+
+          NAMECHEAP_HOST="198.54.116.118"
+          NAMECHEAP_PORT="21098"
+          NAMECHEAP_USER="jennebjj"
+          NAMECHEAP_REPO_PATH="~/prismaticpractice.com"
+
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "$NAMECHEAP_PORT" "$NAMECHEAP_HOST" >> ~/.ssh/known_hosts
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          prod_remote="ssh://${NAMECHEAP_USER}@${NAMECHEAP_HOST}:${NAMECHEAP_PORT}/${NAMECHEAP_REPO_PATH}"
+          git remote add prod "$prod_remote"
+
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -p ${NAMECHEAP_PORT} -o StrictHostKeyChecking=yes" \
+            git push prod HEAD:main

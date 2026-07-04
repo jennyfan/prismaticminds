@@ -1,0 +1,29 @@
+---
+description: Git branching and production deploy workflow for prismaticpractice.com
+alwaysApply: true
+---
+
+# Git and deploy workflow
+
+## Remotes
+
+- `origin` (GitHub: `jennyfan/prismaticminds`) — source of truth for branches and PRs
+- `prod` (Namecheap: `ssh://namecheap/~/prismaticpractice.com`) — live site; tracks `main`
+
+## Branch workflow
+
+1. Do work on feature branches (especially `cursor/*` branches from Cursor).
+2. Push feature branches to `origin` and merge into `main` on GitHub (PR or merge).
+3. **Do not manually `git push prod main`** unless debugging deploy — merging to `main` on GitHub triggers automatic production deploy via GitHub Actions.
+
+## Production deploy
+
+- Trigger: push to `main` on GitHub (`.github/workflows/deploy-prod.yml`)
+- Deploy action: GitHub Actions pushes `main` to the Namecheap git remote; the server post-receive hook checks out `main`.
+- One-time setup: run `./scripts/setup-github-deploy.sh` and add the printed secret to GitHub repo settings.
+
+## When helping with releases
+
+- Prefer merging via GitHub PRs over local-only merges.
+- After merge, confirm the "Deploy to production" GitHub Action succeeded before telling the user prod is live.
+- Local manual fallback: `git checkout main && git pull origin main && git push prod main`
